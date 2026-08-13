@@ -22,12 +22,43 @@ export function MarketArtwork() {
   return <div className="relative min-h-[420px] overflow-hidden rounded-[2.5rem] border-4 border-foreground shadow-[0_10px_0_var(--foreground)]"><Image src="/play2learn/market-scene.png" alt="A sunny village fruit market filled with apples, baskets, and wooden crates" fill sizes="(max-width: 768px) 100vw, 55vw" className="object-cover" /></div>
 }
 
-export function WorldMap({ completed, onMarket, onWorkshop }: { completed: boolean; onMarket: () => void; onWorkshop: () => void }) {
-  return <div className="relative min-h-[540px] overflow-hidden rounded-[2.75rem] border-4 border-foreground shadow-[0_12px_0_var(--foreground)]">
-    <Image src="/play2learn/welcome-world.png" alt="Map of the Play2Learn world" fill priority sizes="100vw" className="object-cover" />
-    <div className="absolute inset-0 bg-foreground/10" />
-    <button onClick={onMarket} className="absolute bottom-[20%] left-[28%] flex -translate-x-1/2 flex-col items-center gap-1 rounded-2xl border-3 border-foreground bg-accent px-5 py-3 text-accent-foreground shadow-[0_6px_0_var(--foreground)] transition-transform hover:-translate-x-1/2 hover:-translate-y-1"><span className="font-black">Market Square</span><span className="text-xs font-bold">{completed ? 'Visit again' : 'Ready to explore'}</span></button>
-    <button onClick={onWorkshop} disabled={!completed} className="absolute right-[18%] top-[18%] flex flex-col items-center gap-1 rounded-2xl border-3 border-foreground bg-primary px-5 py-3 text-primary-foreground shadow-[0_6px_0_var(--foreground)] transition-transform enabled:hover:-translate-y-1 disabled:cursor-not-allowed disabled:opacity-75">{completed ? <Sparkles aria-hidden="true" /> : <LockKeyhole aria-hidden="true" />}<span className="font-black">Workshop</span><span className="text-xs font-bold">{completed ? 'New place unlocked' : 'Complete the Market'}</span></button>
-    <div className="absolute left-1/2 top-[43%] grid size-12 -translate-x-1/2 place-items-center rounded-full border-3 border-foreground bg-card shadow-md"><Star className="fill-primary text-primary" aria-hidden="true" /></div>
-  </div>
+export function WorldMap({ onGameSelect }: { onGameSelect: () => void }) {
+  return (
+    <div className="relative min-h-[540px] overflow-hidden rounded-[2.75rem] border-4 border-foreground shadow-[0_12px_0_var(--foreground)]">
+      <Image
+        src="/play2learn/welcome-world.png"
+        alt="Map of the Play2Learn world with multiple game worlds"
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
+      />
+      <div className="absolute inset-0 bg-foreground/10" />
+
+      {/* Basket Builder Game Button */}
+      <button
+        onClick={onGameSelect}
+        className="group absolute bottom-[20%] left-[28%] flex -translate-x-1/2 flex-col items-center gap-1 rounded-2xl border-3 border-foreground bg-accent px-5 py-3 text-accent-foreground shadow-[0_6px_0_var(--foreground)] transition-all hover:-translate-x-1/2 hover:-translate-y-1 hover:shadow-[0_10px_0_var(--foreground)]"
+      >
+        <span className="font-black">Basket Builder</span>
+        <span className="text-xs font-bold">Choose your level</span>
+        <span className="mt-1 text-xs">🧺 Grouping Game</span>
+      </button>
+
+      {/* Pattern Finder Game Button - Locked */}
+      <button
+        disabled
+        className="absolute right-[18%] top-[18%] flex flex-col items-center gap-1 rounded-2xl border-3 border-foreground bg-muted px-5 py-3 text-muted-foreground shadow-[0_6px_0_var(--foreground)] cursor-not-allowed opacity-50"
+      >
+        <LockKeyhole aria-hidden="true" />
+        <span className="font-black">Pattern Finder</span>
+        <span className="text-xs font-bold">Coming Soon</span>
+      </button>
+
+      {/* Center decoration */}
+      <div className="absolute left-1/2 top-[43%] grid size-12 -translate-x-1/2 place-items-center rounded-full border-3 border-foreground bg-card shadow-md animate-pulse">
+        <Star className="fill-primary text-primary" aria-hidden="true" />
+      </div>
+    </div>
+  )
 }
