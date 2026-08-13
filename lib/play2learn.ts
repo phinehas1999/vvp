@@ -1,5 +1,5 @@
-export type Screen = 'welcome' | 'profile' | 'explorer' | 'orientation' | 'world' | 'game-selector' | 'basket-builder' | 'pattern-finder' | 'game-complete' | 'discoveries'
-export type Game = 'basket-builder' | 'pattern-finder'
+export type Screen = 'welcome' | 'profile' | 'explorer' | 'orientation' | 'world' | 'game-selector' | 'basket-builder' | 'pattern-finder' | 'crystal-cavern' | 'game-complete' | 'discoveries' | 'stats'
+export type Game = 'basket-builder' | 'pattern-finder' | 'crystal-cavern'
 
 export type Explorer = 'Milo' | 'Nia' | 'Pip'
 export type EventKind = 'place' | 'undo' | 'hint' | 'complete' | 'arrangement' | 'time-bonus' | 'combo' | 'error'
@@ -31,6 +31,13 @@ export type Progress = {
       level: number
       totalScore: number
     }
+    'crystal-cavern': {
+      completed: boolean
+      bestTime: number
+      bestCombo: number
+      level: number
+      totalScore: number
+    }
   }
   discoveries: string[]
   lastGame?: Game
@@ -50,6 +57,13 @@ export const DEFAULT_PROGRESS: Progress = {
       totalScore: 0,
     },
     'pattern-finder': {
+      completed: false,
+      bestTime: 0,
+      bestCombo: 0,
+      level: 1,
+      totalScore: 0,
+    },
+    'crystal-cavern': {
       completed: false,
       bestTime: 0,
       bestCombo: 0,
@@ -89,7 +103,16 @@ export function loadProgress(): Progress {
   if (typeof window === 'undefined') return DEFAULT_PROGRESS
   try {
     const saved = window.localStorage.getItem('play2learn-progress')
-    return saved ? { ...DEFAULT_PROGRESS, ...JSON.parse(saved) } : DEFAULT_PROGRESS
+    if (!saved) return DEFAULT_PROGRESS
+    const parsed = JSON.parse(saved)
+    return {
+      ...DEFAULT_PROGRESS,
+      ...parsed,
+      gameState: {
+        ...DEFAULT_PROGRESS.gameState,
+        ...(parsed.gameState ?? {}),
+      },
+    }
   } catch {
     return DEFAULT_PROGRESS
   }
