@@ -8,7 +8,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-2 font-sans font-black tracking-tight" aria-label="Play2Learn">
       <span className={compact ? 'text-xl text-[#3B2F5E]' : 'text-2xl text-[#3B2F5E]'}>
-        Way<span className="text-[#FF7A5C]">farer</span>
+        Play<span className="text-[#FF7A5C]">2Learn</span>
       </span>
       <span className="grid size-8 rotate-3 place-items-center rounded-xl bg-[#FFC94D] text-[#3B2F5E] shadow-[0_3px_0_#3B2F5E]">
         <Sparkles aria-hidden="true" />
