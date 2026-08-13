@@ -1,15 +1,10 @@
 import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
-import Google from 'next-auth/providers/google'
 import bcrypt from 'bcryptjs'
 import { getDb } from './db'
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
-    Google({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
     Credentials({
       name: 'credentials',
       credentials: {
@@ -54,16 +49,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         ;(session.user as any).id = token.userId
       }
       return session
-    },
-    async signIn({ user, account }) {
-      if (account?.provider === 'google') {
-        const sql = getDb()
-        const rows = await sql`SELECT * FROM users WHERE email = ${user.email!}`
-        if (rows.length === 0) {
-          await sql`INSERT INTO users (email, name, role, explorer, password_hash) VALUES (${user.email!}, ${user.name || 'Explorer'}, 'student', 'Milo', '')`
-        }
-      }
-      return true
     },
   },
   pages: {
