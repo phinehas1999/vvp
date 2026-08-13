@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Head from 'next/head'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, ArrowRight, Award, BarChart3, BookOpen, Coins, Compass, LogIn, LogOut, Map, RotateCcw, Sparkles, Star } from 'lucide-react'
@@ -100,10 +101,23 @@ export function Play2LearnApp() {
   const bgImage = bgImages[screen] ?? '/background/ambient-bg.png'
 
   return (
-    <main
-      className="h-dvh overflow-hidden font-sans text-[#3B2F5E] flex flex-col relative selection:bg-[#FFC94D] selection:text-[#3B2F5E]"
-      style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-    >
+    <>
+      <Head>
+        <link rel="preload" as="image" href="/background/entry-bg.png" />
+        <link rel="preload" as="image" href="/background/map-bg.png" />
+        <link rel="preload" as="image" href="/background/stall-bg.png" />
+        <link rel="preload" as="image" href="/background/ambient-bg.png" />
+      </Head>
+      <main
+        className="h-dvh overflow-hidden font-sans text-[#3B2F5E] flex flex-col relative selection:bg-[#FFC94D] selection:text-[#3B2F5E]"
+        style={{ 
+          backgroundImage: `url(${bgImage})`, 
+          backgroundSize: 'cover', 
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
 
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3 md:px-8 shrink-0 z-10">
         <button onClick={() => setScreen('welcome')} aria-label="Go to welcome" className="transition-transform hover:scale-105 active:scale-95">
@@ -281,7 +295,8 @@ export function Play2LearnApp() {
           {screen === 'stats' && <StudentStats progress={progress} onBack={goWorld} />}
         </div>
       </div>
-    </main>
+      </main>
+    </>
   )
 }
 
