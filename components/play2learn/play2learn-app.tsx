@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
-import { ArrowLeft, ArrowRight, Award, BookOpen, Coins, Compass, LogIn, Map, Sparkles, Star } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Award, BookOpen, Coins, Compass, LogIn, Map, RotateCcw, Sparkles, Star } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { BasketBuilderGame, PatternFinderGameBoilerplate } from './enhanced-activities'
 import { GameSelector } from './game-selector'
@@ -68,6 +68,16 @@ export function Play2LearnApp() {
     }
   }
 
+  const resetEverything = () => {
+    setProgress(DEFAULT_PROGRESS)
+    setName('')
+    setCurrentGame(null)
+    setGameScore(0)
+    setGameCombo(0)
+    setGameTime(0)
+    setScreen('profile')
+  }
+
   return (
     <main className="min-h-dvh overflow-hidden bg-background font-sans text-foreground">
       <header className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 md:px-8">
@@ -94,6 +104,7 @@ export function Play2LearnApp() {
               setName('')
               setScreen('profile')
             }}
+            onReset={resetEverything}
           />
         )}
         {screen === 'profile' && (
@@ -205,7 +216,7 @@ export function Play2LearnApp() {
   )
 }
 
-function Welcome({ returning, onStart, onNew }: { returning: boolean; onStart: () => void; onNew: () => void }) {
+function Welcome({ returning, onStart, onNew, onReset }: { returning: boolean; onStart: () => void; onNew: () => void; onReset: () => void }) {
   return (
     <section className="grid items-center gap-10 py-8 md:grid-cols-[1.1fr_.9fr]">
       <div className="flex flex-col items-start gap-6">
@@ -225,9 +236,15 @@ function Welcome({ returning, onStart, onNew }: { returning: boolean; onStart: (
             <ArrowRight data-icon="inline-end" />
           </Button>
           {returning && (
-            <Button size="lg" variant="outline" onClick={onNew}>
-              Start a new journey
-            </Button>
+            <>
+              <Button size="lg" variant="outline" onClick={onNew}>
+                New journey
+              </Button>
+              <Button size="lg" variant="destructive" onClick={onReset}>
+                <RotateCcw data-icon="inline-start" />
+                Reset everything
+              </Button>
+            </>
           )}
         </div>
       </div>
