@@ -4,13 +4,15 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { Compass, Rocket, Sparkles, Star } from 'lucide-react'
+import { useLanguage } from '@/components/i18n/language-context'
 
 export default function WelcomePage() {
+  const { language } = useLanguage()
   const { data: session } = useSession()
   const router = useRouter()
   const [stage, setStage] = useState(0)
 
-  const name = session?.user?.name || 'Explorer'
+  const name = session?.user?.name || (language === 'am' ? 'ተማሪ' : 'Explorer')
 
   useEffect(() => {
     const timers = [
@@ -62,7 +64,7 @@ export default function WelcomePage() {
         {/* Stage 1: Welcome text */}
         <div className={`transition-all duration-700 ease-out delay-100 ${stage >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <h1 className="text-4xl md:text-6xl font-black text-white leading-tight">
-            Welcome back,
+            {language === 'am' ? 'እንኳን ደህና መጡ፣' : 'Welcome back,'}
           </h1>
           <h2 className="text-4xl md:text-6xl font-black text-[#FFC94D] mt-1 flex items-center justify-center gap-3">
             {name} <Star className="size-8 fill-[#FFC94D] text-[#FFC94D] animate-spin" style={{ animationDuration: '3s' }} />
@@ -74,7 +76,7 @@ export default function WelcomePage() {
           <div className="flex items-center gap-3 justify-center">
             <Rocket className="size-8 text-[#FF7A5C] animate-bounce" />
             <p className="text-xl md:text-2xl font-bold text-white/70">
-              Your adventure continues...
+              {language === 'am' ? 'ጉዞዎ ይቀጥላል...' : 'Your adventure continues...'}
             </p>
             <Compass className="size-7 text-[#4FB6C9] animate-pulse" />
           </div>

@@ -12,7 +12,7 @@ export async function GET() {
         name VARCHAR(255) NOT NULL,
         password_hash TEXT NOT NULL DEFAULT '',
         role VARCHAR(20) NOT NULL DEFAULT 'student',
-        explorer VARCHAR(20) DEFAULT 'Milo',
+        explorer VARCHAR(20) DEFAULT 'Abel',
         created_at TIMESTAMP DEFAULT NOW()
       )
     `

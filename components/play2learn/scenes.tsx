@@ -2,6 +2,7 @@
 
 import { Sparkles, Star } from 'lucide-react'
 import type { Explorer } from '@/lib/play2learn'
+import { getExplorerLabel, useLanguage } from '@/components/i18n/language-context'
 import { CharacterAvatar } from './basket-market-assets'
 
 export function Logo({ compact = false }: { compact?: boolean }) {
@@ -19,16 +20,18 @@ export function Logo({ compact = false }: { compact?: boolean }) {
 
 // Map the Explorer name to a consistent seed for CharacterAvatar
 function getSeedForExplorer(explorer: Explorer): number {
-  if (explorer === 'Milo') return 1; // Boy
-  if (explorer === 'Nia') return 2;  // Girl
-  if (explorer === 'Pip') return 3;  // Boy
+  if (explorer === 'Abel') return 1;
+  if (explorer === 'Hana') return 2;
+  if (explorer === 'Lulit') return 3;
   return 0;
 }
 
 export function Character({ explorer, className = '' }: { explorer: Explorer; className?: string }) {
+  const { language } = useLanguage()
   const seed = getSeedForExplorer(explorer);
+  const explorerLabel = getExplorerLabel(explorer, language)
   return (
-    <div className={`relative mx-auto size-32 overflow-hidden rounded-[2rem] border-4 border-[#3B2F5E] shadow-[0_6px_0_#3B2F5E] bg-gradient-to-b from-[#C4E8F0] to-[#FDFBF7] ${className}`} aria-label={`${explorer} the explorer`} role="img">
+    <div className={`relative mx-auto size-32 overflow-hidden rounded-[2rem] border-4 border-[#3B2F5E] shadow-[0_6px_0_#3B2F5E] bg-gradient-to-b from-[#C4E8F0] to-[#FDFBF7] ${className}`} aria-label={`${explorerLabel} ${language === 'am' ? 'ጓደኛ' : 'the explorer'}`} role="img">
       <CharacterAvatar seed={seed} className="absolute inset-0 w-full h-full object-cover translate-y-2 scale-125" />
     </div>
   )

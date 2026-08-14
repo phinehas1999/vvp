@@ -61,7 +61,7 @@ const produceCatalog: ProduceMeta[] = [
   { kind: 'carrot', EmojiIcon: FruitCarrot, label: 'Carrot' },
 ]
 
-const customerNames = ['Liya', 'Noah', 'Sami', 'Mina', 'Kiya', 'Tariq', 'Ari', 'Zuri', 'Nuru', 'Pia']
+const customerNames = ['Abebe', 'Selam', 'Dawit', 'Meron', 'Kaleb', 'Hiwot', 'Yonas', 'Rahel', 'Henok', 'Betel']
 
 function randomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min

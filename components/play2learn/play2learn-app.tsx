@@ -6,6 +6,7 @@ import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft, ArrowRight, Award, BarChart3, BookOpen, Coins, Compass, LogIn, LogOut, Map, RotateCcw, Sparkles, Star } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { getExplorerLabel, useLanguage } from '@/components/i18n/language-context'
 import { SkylineSignalGame } from './enhanced-activities'
 import { CrystalCavernGame } from './crystal-cavern-game'
 import { BasketBuilderGame } from './basket-builder-market-game'
@@ -15,9 +16,10 @@ import { StudentStats } from './student-stats'
 import { Character, Logo, StorybookHero, WorldMap } from './scenes'
 import { DEFAULT_PROGRESS, loadProgress, saveProgress, type Explorer, type Game, type Progress, type Screen } from '@/lib/play2learn'
 
-const explorers: Explorer[] = ['Milo', 'Nia', 'Pip']
+const explorers: Explorer[] = ['Abel', 'Hana', 'Lulit']
 
 export function Play2LearnApp() {
+  const { language } = useLanguage()
   const { data: session, status } = useSession()
   const router = useRouter()
   const [screen, setScreen] = useState<Screen>('welcome')
@@ -161,7 +163,7 @@ export function Play2LearnApp() {
               setName={setName}
               onBack={() => setScreen('welcome')}
               onNext={() => {
-                setProgress({ ...progress, name: name.trim() || 'Explorer' })
+                setProgress({ ...progress, name: name.trim() || (language === 'am' ? 'ተማሪ' : 'Explorer') })
                 setScreen('explorer')
               }}
             />
@@ -206,10 +208,10 @@ export function Play2LearnApp() {
               <div className="flex items-center justify-between gap-3 shrink-0">
                 <Button variant="ghost" onClick={() => setScreen('world')} className="text-[#3B2F5E] hover:bg-[#3B2F5E]/10">
                   <ArrowLeft data-icon="inline-start" />
-                  Back
+                  {language === 'am' ? 'ተመለስ' : 'Back'}
                 </Button>
                 <span className="rounded-full border-2 border-[#3B2F5E] bg-[#FFC94D] px-4 py-1.5 text-sm font-black shadow-[0_2px_0_#3B2F5E]">
-                  Basket Builder · Level {progress.gameState['basket-builder'].level}
+                  {language === 'am' ? 'የቅርጫት ጨዋታ' : 'Basket Builder'} · {language === 'am' ? 'ደረጃ' : 'Level'} {progress.gameState['basket-builder'].level}
                 </span>
               </div>
               <BasketBuilderGame
@@ -232,10 +234,10 @@ export function Play2LearnApp() {
               <div className="flex items-center justify-between gap-3">
                 <Button variant="ghost" onClick={() => setScreen('world')} className="text-[#3B2F5E] hover:bg-[#3B2F5E]/10">
                   <ArrowLeft data-icon="inline-start" />
-                  Back
+                  {language === 'am' ? 'ተመለስ' : 'Back'}
                 </Button>
                 <span className="rounded-full border-2 border-[#3B2F5E] bg-[#FFC94D] px-4 py-2 text-sm font-black shadow-[0_2px_0_#3B2F5E]">
-                  Skyline Signal · Level {progress.gameState['pattern-finder'].level}
+                  {language === 'am' ? 'ሰማይ ምልክት' : 'Skyline Signal'} · {language === 'am' ? 'ደረጃ' : 'Level'} {progress.gameState['pattern-finder'].level}
                 </span>
               </div>
               <SkylineSignalGame
@@ -258,10 +260,10 @@ export function Play2LearnApp() {
               <div className="flex items-center justify-between gap-3 shrink-0">
                 <Button variant="ghost" onClick={() => setScreen('world')} className="text-[#3B2F5E] hover:bg-[#3B2F5E]/10">
                   <ArrowLeft data-icon="inline-start" />
-                  Back
+                  {language === 'am' ? 'ተመለስ' : 'Back'}
                 </Button>
                 <span className="rounded-full border-2 border-[#3B2F5E] bg-[#9B59B6] text-[#FDFBF7] px-4 py-1.5 text-sm font-black shadow-[0_2px_0_#3B2F5E]">
-                  Crystal Cavern · Level {progress.gameState['crystal-cavern'].level}
+                  {language === 'am' ? 'ክሪስታል ዋሻ' : 'Crystal Cavern'} · {language === 'am' ? 'ደረጃ' : 'Level'} {progress.gameState['crystal-cavern'].level}
                 </span>
               </div>
               <CrystalCavernGame
@@ -301,31 +303,36 @@ export function Play2LearnApp() {
 }
 
 function Welcome({ returning, onStart, onNew, onReset }: { returning: boolean; onStart: () => void; onNew: () => void; onReset: () => void }) {
+  const { language } = useLanguage()
   return (
     <section className="flex flex-col items-center justify-center gap-6 py-6 text-center max-w-3xl mx-auto">
       <span className="rounded-full border-3 border-[#3B2F5E] bg-[#FFC94D] px-4 py-2 text-sm font-black text-[#3B2F5E] shadow-[0_4px_0_#3B2F5E] animate-in fade-in slide-in-from-bottom-4">
-        A world that learns with you
+        {language === 'am' ? 'ከእርስዎ ጋር የሚማር ዓለም' : 'A world that learns with you'}
       </span>
       <h1 className="text-balance text-4xl font-black leading-[.95] tracking-tight md:text-6xl animate-in fade-in slide-in-from-bottom-4 duration-500 delay-100 text-[#3B2F5E]">
-        Play with ideas. <span className="text-[#4FB6C9] relative inline-block">Discover<svg className="absolute -bottom-2 left-0 w-full h-3" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M0,10 Q50,20 100,5" fill="none" stroke="#FFC94D" strokeWidth="6" strokeLinecap="round" /></svg></span> your way.
+        {language === 'am'
+          ? 'በሀሳቦች ጨዋታ ይማሩ። መንገድዎን ያግኙ።'
+          : <>Play with ideas. <span className="text-[#4FB6C9] relative inline-block">Discover<svg className="absolute -bottom-2 left-0 w-full h-3" viewBox="0 0 100 20" preserveAspectRatio="none"><path d="M0,10 Q50,20 100,5" fill="none" stroke="#FFC94D" strokeWidth="6" strokeLinecap="round" /></svg></span> your way.</>}
       </h1>
       <p className="max-w-xl text-pretty text-base font-semibold leading-relaxed text-[#3B2F5E]/70 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-200">
-        Choose an explorer, visit the game worlds, and solve challenging puzzles. No grades. No race. Just curious thinking and fun!
+        {language === 'am'
+          ? 'የጉዞ ጓደኛ ይምረጡ፣ የጨዋታ ዓለማትን ይጎብኙ እና አስቸጋሪ ጥያቄዎችን ይፍቱ። ውጤት ግፊት የለም፣ ደስታ ብቻ ነው።'
+          : 'Choose an explorer, visit the game worlds, and solve challenging puzzles. No grades. No race. Just curious thinking and fun!'}
       </p>
       <div className="flex flex-wrap justify-center gap-4 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-300 mt-2">
         <Button size="lg" onClick={onStart} className="bg-[#4FB6C9] hover:bg-[#3A9CAB] text-[#FDFBF7] border-3 border-[#3B2F5E] shadow-[0_6px_0_#3B2F5E] hover:shadow-[0_8px_0_#3B2F5E] hover:-translate-y-1 transition-all rounded-2xl h-14 px-8 text-lg">
           {returning ? <LogIn data-icon="inline-start" className="mr-2" /> : <Compass data-icon="inline-start" className="mr-2" />}
-          {returning ? 'Continue my journey' : 'Start exploring'}
+          {returning ? (language === 'am' ? 'ጉዞዬን ቀጥል' : 'Continue my journey') : (language === 'am' ? 'ጉዞ ጀምር' : 'Start exploring')}
           <ArrowRight data-icon="inline-end" className="ml-2" />
         </Button>
         {returning && (
           <>
             <Button size="lg" variant="outline" onClick={onNew} className="border-3 border-[#3B2F5E] text-[#3B2F5E] hover:bg-[#FDFBF7]/80 shadow-[0_6px_0_#3B2F5E] hover:-translate-y-1 transition-all rounded-2xl h-14">
-              New journey
+              {language === 'am' ? 'አዲስ ጉዞ' : 'New journey'}
             </Button>
             <Button size="lg" variant="destructive" onClick={onReset} className="border-3 border-[#3B2F5E] bg-[#FF7A5C] hover:bg-[#E65C3D] text-[#FDFBF7] shadow-[0_6px_0_#3B2F5E] hover:-translate-y-1 transition-all rounded-2xl h-14">
               <RotateCcw data-icon="inline-start" className="mr-2" />
-              Reset everything
+              {language === 'am' ? 'ሁሉንም እንደገና ጀምር' : 'Reset everything'}
             </Button>
           </>
         )}
@@ -335,10 +342,11 @@ function Welcome({ returning, onStart, onNew, onReset }: { returning: boolean; o
 }
 
 function Profile({ name, setName, onBack, onNext }: { name: string; setName: (value: string) => void; onBack: () => void; onNext: () => void }) {
+  const { language } = useLanguage()
   return (
-    <Panel icon={<BookOpen className="text-[#4FB6C9]" />} eyebrow="First, your explorer card" title="What should we call you?">
+    <Panel icon={<BookOpen className="text-[#4FB6C9]" />} eyebrow={language === 'am' ? 'መጀመሪያ የተማሪ መለያ' : 'First, your explorer card'} title={language === 'am' ? 'ምን ብለን እንጠራዎት?' : 'What should we call you?'}>
       <label htmlFor="name" className="font-black text-[#3B2F5E]">
-        Explorer name
+        {language === 'am' ? 'የተማሪ ስም' : 'Explorer name'}
       </label>
       <input
         id="name"
@@ -348,7 +356,7 @@ function Profile({ name, setName, onBack, onNext }: { name: string; setName: (va
           if (event.key === 'Enter' && !event.nativeEvent.isComposing && event.keyCode !== 229 && name.trim())
             onNext()
         }}
-        placeholder="Type your name"
+        placeholder={language === 'am' ? 'ስምዎን ያስገቡ' : 'Type your name'}
         className="h-16 rounded-2xl border-4 border-[#3B2F5E] bg-[#FDFBF7] px-5 text-xl font-bold text-[#3B2F5E] outline-none transition-all placeholder:text-[#3B2F5E]/30 focus:ring-4 focus:ring-[#FFC94D] focus:border-[#4FB6C9] shadow-inner"
       />
       <Nav back={onBack} next={onNext} disabled={!name.trim()} />
@@ -357,8 +365,9 @@ function Profile({ name, setName, onBack, onNext }: { name: string; setName: (va
 }
 
 function ExplorerPicker({ selected, onSelect, onBack, onNext }: { selected: Explorer; onSelect: (value: Explorer) => void; onBack: () => void; onNext: () => void }) {
+  const { language } = useLanguage()
   return (
-    <Panel icon={<Compass className="text-[#FF7A5C]" />} eyebrow="Choose a travel buddy" title="Who will explore with you?">
+    <Panel icon={<Compass className="text-[#FF7A5C]" />} eyebrow={language === 'am' ? 'የጉዞ ጓደኛ ይምረጡ' : 'Choose a travel buddy'} title={language === 'am' ? 'ከእርስዎ ጋር ማን ይጓዛል?' : 'Who will explore with you?'}>
       <div className="grid grid-cols-3 gap-4">
         {explorers.map((explorer) => (
           <button
@@ -371,7 +380,7 @@ function ExplorerPicker({ selected, onSelect, onBack, onNext }: { selected: Expl
               }`}
           >
             <Character explorer={explorer} className="w-full aspect-square h-auto" />
-            <span className="font-black text-xl text-[#3B2F5E]">{explorer}</span>
+            <span className="font-black text-xl text-[#3B2F5E]">{getExplorerLabel(explorer, language)}</span>
           </button>
         ))}
       </div>
@@ -381,17 +390,20 @@ function ExplorerPicker({ selected, onSelect, onBack, onNext }: { selected: Expl
 }
 
 function Orientation({ explorer, name, onNext }: { explorer: Explorer; name: string; onNext: () => void }) {
+  const { language } = useLanguage()
   return (
     <section className="mx-auto max-w-3xl text-center flex flex-col items-center gap-6">
       <Character explorer={explorer} className="mb-4" />
       <div className="rounded-[2.5rem] border-4 border-[#3B2F5E] bg-[#FDFBF7] p-8 md:p-10 shadow-[0_12px_0_#3B2F5E] animate-in fade-in zoom-in-95 duration-500 relative">
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-[#FDFBF7] border-l-4 border-t-4 border-[#3B2F5E] rotate-45" />
-        <p className="text-3xl md:text-4xl font-black text-[#3B2F5E]">"Hi {name}! I'm {explorer}."</p>
+        <p className="text-3xl md:text-4xl font-black text-[#3B2F5E]">{language === 'am' ? `"ሰላም ${name}! እኔ ${getExplorerLabel(explorer, language)} ነኝ።"` : `"Hi ${name}! I'm ${explorer}."`}</p>
         <p className="mt-4 text-xl font-semibold leading-relaxed text-[#3B2F5E]/70 max-w-xl mx-auto">
-          Our world has multiple game worlds waiting for you. Each one teaches different mathematical concepts through fun challenges. Try levels, improve your skills, and unlock new games!
+          {language === 'am'
+            ? 'ዓለማችን ብዙ የጨዋታ ዓለማት አሉት። እያንዳንዱ በመዝናኛ ፈተናዎች የሒሳብ እውቀት ያስተምራል። ደረጃዎችን ይሞክሩ እና አዲስ ጨዋታዎችን ይክፈቱ።'
+            : 'Our world has multiple game worlds waiting for you. Each one teaches different mathematical concepts through fun challenges. Try levels, improve your skills, and unlock new games!'}
         </p>
         <Button className="mt-8 bg-[#4FB6C9] hover:bg-[#3A9CAB] text-[#FDFBF7] border-3 border-[#3B2F5E] shadow-[0_6px_0_#3B2F5E] hover:shadow-[0_8px_0_#3B2F5E] hover:-translate-y-1 transition-all rounded-2xl h-14 px-8 text-lg" size="lg" onClick={onNext}>
-          Enter the Game Worlds
+          {language === 'am' ? 'ወደ ጨዋታ ዓለማት ግባ' : 'Enter the Game Worlds'}
           <Map data-icon="inline-end" className="ml-2" />
         </Button>
       </div>
@@ -400,18 +412,19 @@ function Orientation({ explorer, name, onNext }: { explorer: Explorer; name: str
 }
 
 function World({ progress, onGameSelect, onDiscoveries }: { progress: Progress; onGameSelect: (game?: string) => void; onDiscoveries: () => void }) {
+  const { language } = useLanguage()
   return (
     <section className="flex flex-col gap-4 animate-in fade-in duration-500">
       <div className="flex flex-wrap items-end justify-between gap-4 bg-[#FDFBF7]/90 backdrop-blur-sm border-3 border-[#3B2F5E] rounded-2xl p-4 shadow-[0_6px_0_#3B2F5E]">
         <div>
-          <p className="font-bold text-[#FF7A5C] uppercase tracking-wider text-xs">Welcome back, {progress.name}</p>
-          <h1 className="text-2xl md:text-3xl font-black text-[#3B2F5E] mt-1">Which game will you play today?</h1>
+          <p className="font-bold text-[#FF7A5C] uppercase tracking-wider text-xs">{language === 'am' ? `እንኳን ደህና መጡ፣ ${progress.name}` : `Welcome back, ${progress.name}`}</p>
+          <h1 className="text-2xl md:text-3xl font-black text-[#3B2F5E] mt-1">{language === 'am' ? 'ዛሬ የትኛውን ጨዋታ ይጫወታሉ?' : 'Which game will you play today?'}</h1>
         </div>
         <div className="flex gap-2">
           {progress.discoveries.length > 0 && (
             <Button variant="outline" onClick={onDiscoveries} className="border-3 border-[#3B2F5E] text-[#3B2F5E] bg-[#FFC94D] hover:bg-[#F5C047] shadow-[0_4px_0_#3B2F5E] hover:-translate-y-0.5 rounded-xl h-12">
               <Award data-icon="inline-start" className="mr-2" />
-              Achievements
+              {language === 'am' ? 'ስኬቶች' : 'Achievements'}
             </Button>
           )}
         </div>
@@ -422,6 +435,7 @@ function World({ progress, onGameSelect, onDiscoveries }: { progress: Progress; 
 }
 
 function Discoveries({ progress, onBack }: { progress: Progress; onBack: () => void }) {
+  const { language } = useLanguage()
   const achievements = [
     { id: 'basket-builder-1', title: 'Basket Master', description: 'Complete Basket Builder Level 1', unlocked: progress.gameState['basket-builder'].completed },
     { id: 'basket-builder-2', title: 'Division Expert', description: 'Reach Level 2 in Basket Builder', unlocked: progress.gameState['basket-builder'].level >= 2 },
@@ -439,11 +453,11 @@ function Discoveries({ progress, onBack }: { progress: Progress; onBack: () => v
       <div className="bg-[#FDFBF7] border-4 border-[#3B2F5E] rounded-3xl p-6 shadow-[0_8px_0_#3B2F5E] flex justify-between items-center">
         <div>
           <p className="font-bold text-[#FF7A5C] uppercase tracking-wider text-sm">Growing with every try</p>
-          <h1 className="text-3xl md:text-4xl font-black text-[#3B2F5E] mt-1">Your achievements</h1>
+          <h1 className="text-3xl md:text-4xl font-black text-[#3B2F5E] mt-1">{language === 'am' ? 'የእርስዎ ስኬቶች' : 'Your achievements'}</h1>
         </div>
         <Button className="self-start border-3 border-[#3B2F5E] text-[#3B2F5E] bg-transparent hover:bg-[#3B2F5E]/5 shadow-[0_4px_0_#3B2F5E] rounded-xl h-12" size="lg" onClick={onBack}>
           <ArrowLeft data-icon="inline-start" className="mr-2" />
-          Back to world
+          {language === 'am' ? 'ወደ ዓለም ተመለስ' : 'Back to world'}
         </Button>
       </div>
 
@@ -496,14 +510,15 @@ function Panel({ icon, eyebrow, title, children }: { icon: React.ReactNode; eyeb
 }
 
 function Nav({ back, next, disabled = false }: { back: () => void; next: () => void; disabled?: boolean }) {
+  const { language } = useLanguage()
   return (
     <div className="flex justify-between gap-4 mt-2">
       <Button variant="outline" size="lg" onClick={back} className="border-3 border-[#3B2F5E] text-[#3B2F5E] hover:bg-[#3B2F5E]/5 shadow-[0_4px_0_#3B2F5E] hover:-translate-y-0.5 rounded-2xl h-14 px-6">
         <ArrowLeft data-icon="inline-start" className="mr-2" />
-        Back
+        {language === 'am' ? 'ተመለስ' : 'Back'}
       </Button>
       <Button size="lg" onClick={next} disabled={disabled} className="bg-[#6FBF73] hover:bg-[#5AA65E] text-[#FDFBF7] border-3 border-[#3B2F5E] shadow-[0_4px_0_#3B2F5E] hover:shadow-[0_6px_0_#3B2F5E] hover:-translate-y-0.5 transition-all rounded-2xl h-14 px-8 text-lg disabled:opacity-50 disabled:pointer-events-none disabled:shadow-none disabled:translate-y-0 disabled:bg-[#C9E585]">
-        Continue
+        {language === 'am' ? 'ቀጥል' : 'Continue'}
         <ArrowRight data-icon="inline-end" className="ml-2" />
       </Button>
     </div>

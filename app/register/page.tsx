@@ -3,8 +3,10 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowRight, Compass, GraduationCap, Lock, Mail, Sparkles, User } from 'lucide-react'
+import { useLanguage } from '@/components/i18n/language-context'
 
 export default function RegisterPage() {
+  const { language } = useLanguage()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -28,7 +30,7 @@ export default function RegisterPage() {
     setLoading(false)
 
     if (!res.ok) {
-      setError(data.error || 'Registration failed')
+      setError(data.error || (language === 'am' ? 'ምዝገባ አልተሳካም' : 'Registration failed'))
     } else {
       router.push('/login')
     }
@@ -48,7 +50,7 @@ export default function RegisterPage() {
             <span className="font-black text-[#3B2F5E]">Play2Learn</span>
           </div>
           <h1 className="text-3xl font-black text-[#3B2F5E] mt-4">Join the adventure!</h1>
-          <p className="text-[#3B2F5E]/60 font-semibold mt-1">Create your account to get started</p>
+          <p className="text-[#3B2F5E]/60 font-semibold mt-1">{language === 'am' ? 'ለመጀመር መለያ ይፍጠሩ' : 'Create your account to get started'}</p>
         </div>
 
         {/* Role toggle */}
@@ -63,7 +65,7 @@ export default function RegisterPage() {
             }`}
           >
             <Compass className="size-4" />
-            Student
+            {language === 'am' ? 'ተማሪ' : 'Student'}
           </button>
           <button
             type="button"
@@ -75,7 +77,7 @@ export default function RegisterPage() {
             }`}
           >
             <GraduationCap className="size-4" />
-            Teacher
+            {language === 'am' ? 'መምህር' : 'Teacher'}
           </button>
         </div>
 
@@ -88,7 +90,9 @@ export default function RegisterPage() {
 
           <div className="space-y-2">
             <label className="font-black text-sm text-[#3B2F5E]">
-              {role === 'teacher' ? 'Full Name' : 'Explorer Name'}
+              {role === 'teacher'
+                ? (language === 'am' ? 'ሙሉ ስም' : 'Full Name')
+                : (language === 'am' ? 'የተማሪ ስም' : 'Explorer Name')}
             </label>
             <div className="relative">
               <User className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-[#3B2F5E]/40" />
@@ -96,7 +100,9 @@ export default function RegisterPage() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder={role === 'teacher' ? 'Ms. Johnson' : 'Your explorer name'}
+                placeholder={role === 'teacher'
+                  ? (language === 'am' ? 'ወ/ሮ ሃና' : 'Ms. Hana')
+                  : (language === 'am' ? 'የተማሪ ስምዎ' : 'Your explorer name')}
                 required
                 className="w-full h-14 rounded-xl border-3 border-[#3B2F5E] bg-white pl-12 pr-4 text-[#3B2F5E] font-bold placeholder:text-[#3B2F5E]/30 focus:ring-4 focus:ring-[#FFC94D] focus:border-[#4FB6C9] outline-none transition-all"
               />
@@ -104,14 +110,14 @@ export default function RegisterPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="font-black text-sm text-[#3B2F5E]">Email</label>
+            <label className="font-black text-sm text-[#3B2F5E]">{language === 'am' ? 'ኢሜይል' : 'Email'}</label>
             <div className="relative">
               <Mail className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-[#3B2F5E]/40" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="your@email.com"
+                placeholder={language === 'am' ? 'you@example.com' : 'your@email.com'}
                 required
                 className="w-full h-14 rounded-xl border-3 border-[#3B2F5E] bg-white pl-12 pr-4 text-[#3B2F5E] font-bold placeholder:text-[#3B2F5E]/30 focus:ring-4 focus:ring-[#FFC94D] focus:border-[#4FB6C9] outline-none transition-all"
               />
@@ -119,14 +125,14 @@ export default function RegisterPage() {
           </div>
 
           <div className="space-y-2">
-            <label className="font-black text-sm text-[#3B2F5E]">Password</label>
+            <label className="font-black text-sm text-[#3B2F5E]">{language === 'am' ? 'የይለፍ ቃል' : 'Password'}</label>
             <div className="relative">
               <Lock className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-[#3B2F5E]/40" />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="At least 6 characters"
+                placeholder={language === 'am' ? 'ቢያንስ 6 ፊደል' : 'At least 6 characters'}
                 required
                 minLength={6}
                 className="w-full h-14 rounded-xl border-3 border-[#3B2F5E] bg-white pl-12 pr-4 text-[#3B2F5E] font-bold placeholder:text-[#3B2F5E]/30 focus:ring-4 focus:ring-[#FFC94D] focus:border-[#4FB6C9] outline-none transition-all"
@@ -141,15 +147,15 @@ export default function RegisterPage() {
               role === 'student' ? 'bg-[#4FB6C9] hover:bg-[#3A9CAB]' : 'bg-[#6FBF73] hover:bg-[#5AA65E]'
             }`}
           >
-            {loading ? 'Creating account...' : 'Create Account'}
+            {loading ? (language === 'am' ? 'መለያ እየተፈጠረ ነው...' : 'Creating account...') : (language === 'am' ? 'መለያ ፍጠር' : 'Create Account')}
             {!loading && <ArrowRight className="size-5" />}
           </button>
         </form>
 
         <p className="text-center mt-6 font-bold text-[#3B2F5E]/60">
-          Already have an account?{' '}
+          {language === 'am' ? 'መለያ አለዎት?' : 'Already have an account?'}{' '}
           <a href="/login" className="text-[#4FB6C9] hover:text-[#3A9CAB] underline decoration-2 underline-offset-4">
-            Sign in
+            {language === 'am' ? 'ይግቡ' : 'Sign in'}
           </a>
         </p>
       </div>

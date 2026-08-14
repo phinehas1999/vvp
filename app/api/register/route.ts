@@ -4,7 +4,7 @@ import { getDb } from '@/lib/db'
 
 export async function POST(request: Request) {
   try {
-    const { email, password, name, role = 'student', explorer = 'Milo' } = await request.json()
+    const { email, password, name, role = 'student', explorer = 'Abel' } = await request.json()
 
     if (!email || !password || !name) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })

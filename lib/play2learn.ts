@@ -1,7 +1,7 @@
 export type Screen = 'welcome' | 'profile' | 'explorer' | 'orientation' | 'world' | 'game-selector' | 'basket-builder' | 'pattern-finder' | 'crystal-cavern' | 'game-complete' | 'discoveries' | 'stats'
 export type Game = 'basket-builder' | 'pattern-finder' | 'crystal-cavern'
 
-export type Explorer = 'Milo' | 'Nia' | 'Pip'
+export type Explorer = 'Abel' | 'Hana' | 'Lulit'
 export type EventKind = 'place' | 'undo' | 'hint' | 'complete' | 'arrangement' | 'time-bonus' | 'combo' | 'error'
 export type Difficulty = 'easy' | 'medium' | 'hard' | 'expert'
 
@@ -45,7 +45,7 @@ export type Progress = {
 
 export const DEFAULT_PROGRESS: Progress = {
   name: '',
-  explorer: 'Milo',
+  explorer: 'Abel',
   coins: 0,
   stars: 0,
   gameState: {
@@ -105,9 +105,20 @@ export function loadProgress(): Progress {
     const saved = window.localStorage.getItem('play2learn-progress')
     if (!saved) return DEFAULT_PROGRESS
     const parsed = JSON.parse(saved)
+
+    const explorerAlias: Record<string, Explorer> = {
+      Milo: 'Abel',
+      Nia: 'Hana',
+      Pip: 'Lulit',
+      Abel: 'Abel',
+      Hana: 'Hana',
+      Lulit: 'Lulit',
+    }
+
     return {
       ...DEFAULT_PROGRESS,
       ...parsed,
+      explorer: explorerAlias[String(parsed.explorer)] ?? DEFAULT_PROGRESS.explorer,
       gameState: {
         ...DEFAULT_PROGRESS.gameState,
         ...(parsed.gameState ?? {}),

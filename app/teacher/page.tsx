@@ -62,14 +62,14 @@ const engagementData = [
 ]
 
 const mockStudents = [
-  { id: 1, name: 'Aisha K.', explorer: 'Nia', stars: 142, coins: 890, gamesPlayed: 47, avgScore: 84, streak: 7, lastActive: '2 hours ago', trend: 'up' },
-  { id: 2, name: 'Ben T.', explorer: 'Milo', stars: 98, coins: 620, gamesPlayed: 35, avgScore: 72, streak: 3, lastActive: '5 hours ago', trend: 'up' },
-  { id: 3, name: 'Chloe M.', explorer: 'Pip', stars: 210, coins: 1340, gamesPlayed: 63, avgScore: 91, streak: 12, lastActive: '1 hour ago', trend: 'up' },
-  { id: 4, name: 'David L.', explorer: 'Milo', stars: 67, coins: 410, gamesPlayed: 22, avgScore: 65, streak: 1, lastActive: '1 day ago', trend: 'down' },
-  { id: 5, name: 'Emma W.', explorer: 'Nia', stars: 156, coins: 980, gamesPlayed: 51, avgScore: 87, streak: 9, lastActive: '3 hours ago', trend: 'up' },
-  { id: 6, name: 'Finn O.', explorer: 'Pip', stars: 45, coins: 280, gamesPlayed: 15, avgScore: 58, streak: 0, lastActive: '3 days ago', trend: 'down' },
-  { id: 7, name: 'Grace H.', explorer: 'Nia', stars: 178, coins: 1120, gamesPlayed: 56, avgScore: 89, streak: 5, lastActive: '4 hours ago', trend: 'up' },
-  { id: 8, name: 'Hugo S.', explorer: 'Milo', stars: 89, coins: 550, gamesPlayed: 30, avgScore: 70, streak: 2, lastActive: '1 day ago', trend: 'stable' },
+  { id: 1, name: 'Aster K.', explorer: 'Hana', stars: 142, coins: 890, gamesPlayed: 47, avgScore: 84, streak: 7, lastActive: '2 hours ago', trend: 'up' },
+  { id: 2, name: 'Biruk T.', explorer: 'Abel', stars: 98, coins: 620, gamesPlayed: 35, avgScore: 72, streak: 3, lastActive: '5 hours ago', trend: 'up' },
+  { id: 3, name: 'Lensa M.', explorer: 'Lulit', stars: 210, coins: 1340, gamesPlayed: 63, avgScore: 91, streak: 12, lastActive: '1 hour ago', trend: 'up' },
+  { id: 4, name: 'Dawit L.', explorer: 'Abel', stars: 67, coins: 410, gamesPlayed: 22, avgScore: 65, streak: 1, lastActive: '1 day ago', trend: 'down' },
+  { id: 5, name: 'Meklit W.', explorer: 'Hana', stars: 156, coins: 980, gamesPlayed: 51, avgScore: 87, streak: 9, lastActive: '3 hours ago', trend: 'up' },
+  { id: 6, name: 'Nahom O.', explorer: 'Lulit', stars: 45, coins: 280, gamesPlayed: 15, avgScore: 58, streak: 0, lastActive: '3 days ago', trend: 'down' },
+  { id: 7, name: 'Saron H.', explorer: 'Hana', stars: 178, coins: 1120, gamesPlayed: 56, avgScore: 89, streak: 5, lastActive: '4 hours ago', trend: 'up' },
+  { id: 8, name: 'Henok S.', explorer: 'Abel', stars: 89, coins: 550, gamesPlayed: 30, avgScore: 70, streak: 2, lastActive: '1 day ago', trend: 'stable' },
 ]
 
 const recentAlerts = [
@@ -299,8 +299,8 @@ export default function TeacherDashboard() {
                         </td>
                         <td className="py-3 px-2 text-center">
                           <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-black ${
-                            student.explorer === 'Milo' ? 'bg-[#4FB6C9]/15 text-[#4FB6C9]' :
-                            student.explorer === 'Nia' ? 'bg-[#FF7A5C]/15 text-[#FF7A5C]' :
+                            student.explorer === 'Abel' ? 'bg-[#4FB6C9]/15 text-[#4FB6C9]' :
+                            student.explorer === 'Hana' ? 'bg-[#FF7A5C]/15 text-[#FF7A5C]' :
                             'bg-[#6FBF73]/15 text-[#6FBF73]'
                           }`}>
                             {student.explorer}
@@ -433,8 +433,8 @@ function StudentDetail({ student, onBack }: { student: typeof mockStudents[0]; o
       <div className="rounded-2xl border-3 border-[#3B2F5E]/10 bg-white p-6">
         <div className="flex flex-wrap items-center gap-6">
           <div className={`size-16 rounded-2xl border-3 flex items-center justify-center font-black text-2xl text-white ${
-            student.explorer === 'Milo' ? 'bg-[#4FB6C9] border-[#3B2F5E]' :
-            student.explorer === 'Nia' ? 'bg-[#FF7A5C] border-[#3B2F5E]' :
+            student.explorer === 'Abel' ? 'bg-[#4FB6C9] border-[#3B2F5E]' :
+            student.explorer === 'Hana' ? 'bg-[#FF7A5C] border-[#3B2F5E]' :
             'bg-[#6FBF73] border-[#3B2F5E]'
           }`}>
             {student.name[0]}

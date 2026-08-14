@@ -4,13 +4,15 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { BookOpen, GraduationCap, LayoutDashboard, Sparkles, Users } from 'lucide-react'
+import { useLanguage } from '@/components/i18n/language-context'
 
 export default function TeacherWelcomePage() {
+  const { language } = useLanguage()
   const { data: session } = useSession()
   const router = useRouter()
   const [stage, setStage] = useState(0)
 
-  const name = session?.user?.name || 'Teacher'
+  const name = session?.user?.name || (language === 'am' ? 'መምህር' : 'Teacher')
 
   useEffect(() => {
     const timers = [
@@ -49,7 +51,7 @@ export default function TeacherWelcomePage() {
         {/* Stage 1: Greeting */}
         <div className={`transition-all duration-700 ease-out ${stage >= 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <h1 className="text-4xl md:text-5xl font-black text-[#3B2F5E] leading-tight">
-            Good to see you,
+            {language === 'am' ? 'እንኳን ደህና መጡ፣' : 'Good to see you,'}
           </h1>
           <h2 className="text-4xl md:text-5xl font-black text-[#6FBF73] mt-2">
             {name} <Sparkles className="inline size-8 text-[#FFC94D]" />
@@ -61,11 +63,11 @@ export default function TeacherWelcomePage() {
           <div className="flex items-center gap-6 justify-center">
             <div className="flex items-center gap-2 rounded-xl border-2 border-[#3B2F5E]/15 bg-white px-4 py-3">
               <Users className="size-5 text-[#4FB6C9]" />
-              <span className="font-black text-[#3B2F5E]">8 students active</span>
+              <span className="font-black text-[#3B2F5E]">{language === 'am' ? '8 ተማሪዎች ንቁ ናቸው' : '8 students active'}</span>
             </div>
             <div className="flex items-center gap-2 rounded-xl border-2 border-[#3B2F5E]/15 bg-white px-4 py-3">
               <BookOpen className="size-5 text-[#FF7A5C]" />
-              <span className="font-black text-[#3B2F5E]">12 sessions today</span>
+              <span className="font-black text-[#3B2F5E]">{language === 'am' ? 'ዛሬ 12 ሴሽኖች' : '12 sessions today'}</span>
             </div>
           </div>
         </div>
@@ -74,7 +76,7 @@ export default function TeacherWelcomePage() {
         <div className={`transition-all duration-500 ease-out ${stage >= 3 ? 'opacity-100' : 'opacity-0'}`}>
           <div className="flex items-center gap-3 text-[#3B2F5E]/60 font-bold">
             <LayoutDashboard className="size-5 animate-pulse" />
-            <span>Loading your dashboard...</span>
+            <span>{language === 'am' ? 'ዳሽቦርድዎ በመጫን ላይ...' : 'Loading your dashboard...'}</span>
           </div>
           <div className="mt-4 w-48 h-1.5 rounded-full bg-[#3B2F5E]/10 overflow-hidden mx-auto">
             <div className="h-full bg-[#6FBF73] rounded-full animate-[loading_1.5s_ease-in-out_infinite]" 
